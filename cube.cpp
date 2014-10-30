@@ -10,12 +10,13 @@ Cube::Cube()
   center = new Vector3(0.0, 0.0, 0.0);
   angle = 0.0;
   rotation = true;
-  tx = 1;
-  ty = 1;
-  tz = 1;
+  tx = 0.1;
+  ty = 0.1;
+  tz = 0.1;
   maxY = 11;
   tempY = maxY;
   radius = 1;
+  YLimit = 0;
 }
 
 Matrix4& Cube::getMatrix()
@@ -55,6 +56,7 @@ void Cube::reset() {
 	maxY = 11;
 	tempY = maxY;
 	rotation = true;
+	YLimit = 0;
 }
 
 void Cube::orbit(bool counter) {
@@ -93,17 +95,19 @@ void Cube::flipRotation() {
 
 void Cube::bounce(double width, double height) {
 	Matrix4  mat;
-		double Y = 20*sin(30*M_PI/180);
+		double Y = (-center->getZ() + 20)*tan(30*M_PI/180);
 		double X = Y * width / height ;
-		if (center->getX() < -X)
+		if (center->getX() < -X + radius)
 				tx = -tx;
-		else if (center->getX() > X)
+		else if (center->getX() > X - radius)
 			tx = -tx;
-		if (center->getY() > Y)
+		if (center->getY() > Y - radius + YLimit)
 			ty = -ty;
-		else if (center->getY() < -Y)
+		else if (center->getY() < -Y + radius) {
+			YLimit = YLimit - Y/2;
 			ty = -ty;
-		mat.makeTranslate(tx, ty, 0);
+		}
+		mat.makeTranslate(tx, ty,0);
 		center->translate(tx, ty, 0);
 		center->print("ASD");
 		model2world = mat * model2world;

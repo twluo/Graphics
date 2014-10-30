@@ -14,7 +14,9 @@ class Cube
 
 public:
     Cube();   // Constructor
+	int YLimit;
 	int radius;
+	int desaceleration;
     Matrix4& getMatrix();
 	double tx, ty, tz, maxY, tempY;
     void spin(double);      // spin cube [degrees]
