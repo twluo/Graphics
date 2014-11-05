@@ -50,11 +50,12 @@ double Vector3::dot(const Vector3& v1, const Vector3& v2) {
 }
 
 Vector3 Vector3::cross(const Vector3& v1, const Vector3& v2) {
-	v[0] = (v1.v[1] * v2.v[2]) - (v1.v[2] * v2.v[1]);
-	v[1] = - (v1.v[0] * v2.v[2]) + (v1.v[2] * v2.v[0]);
-	v[2] = (v1.v[0] * v2.v[1]) - (v1.v[1] * v2.v[0]);
+	Vector3 *temp = new Vector3(0, 0, 0);
+	temp->v[0] = (v1.v[1] * v2.v[2]) - (v1.v[2] * v2.v[1]);
+	temp->v[1] = - (v1.v[0] * v2.v[2]) + (v1.v[2] * v2.v[0]);
+	temp->v[2] = (v1.v[0] * v2.v[1]) - (v1.v[1] * v2.v[0]);
 
-	return *this; // WHAT EVEN
+	return *temp; // WHAT EVEN
 }
 
 double Vector3::length() {

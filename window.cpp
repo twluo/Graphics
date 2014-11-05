@@ -114,7 +114,12 @@ void Window::displayCallback()
 		  if (!read) {
 			  normals.clear();
 			  points.clear();
-			  sX, sY, sZ, lX, lY, lZ = 0;
+			  sX = 10;
+			  sY = 10;
+			  sZ = 10;
+			  lX = 0;
+			  lY = 0;
+			  lZ = 0;
 			  std::cout << "Read" << std::endl;
 			  while (file >> x >> y >> z >> nX >> nY >> nZ) {
 				  normal = new Vector3(nX, nY, nZ);
@@ -148,10 +153,11 @@ void Window::displayCallback()
 		  if (!read) {
 			  read = true;
 			  double scale;
-			  double Y = 40*tan(30*M_PI/180);
+			  double Y = 33*tan(30*M_PI/180);
 			  double X = Y * width / height;
 			  double x = lX - sX;
 			  double y = lY - sY;
+			  double z = lZ - sZ;
 			  if (x < y){
 				  scale = Y / y;
 				  Globals::cube.scale(scale);
@@ -160,9 +166,13 @@ void Window::displayCallback()
 				  scale = X / x;
 				  Globals::cube.scale(scale);
 			  }
+			  x = (lX + sX)*scale;
+			  y = (lY + sY)*scale;
+			  z = (lZ + sZ)*scale;
+			  Globals::cube.move(-x / 2.0, -y / 2.0, -z / 2.0);
 			  x = X/ 8;
 			  y = Y / 2;
-			  Globals::cube.move(x, -y, 0);
+			  //Globals::cube.move(x, -y, 0);
 		  }
 	  }
 	  else {
@@ -208,6 +218,7 @@ void Window::displayCallback()
 			  double X = Y * width / height;
 			  double x = lX - sX;
 			  double y = lY - sY;
+			  double z = lZ - sZ;
 			  if (x < y){
 				  scale = Y / y;
 				  Globals::cube.scale(scale);
@@ -216,9 +227,10 @@ void Window::displayCallback()
 				  scale = X / x;
 				  Globals::cube.scale(scale);
 			  }
-			  x = x*scale/ 8;
-			  y = y*scale / 2;
-			  Globals::cube.move(x - 2, -y, 0);
+			  x = (lX + sX)*scale;
+			  y = (lY + sY)*scale;
+			  z = (lZ + sZ)*scale;
+			  Globals::cube.move(-x / 2.0, -y / 2.0, -z / 2.0);
 		  }
 		  }
 		  

@@ -45,9 +45,9 @@ void Vector4::setValue(int pos, double val) {
 }
 
 void Vector4::translate(double tx, double ty, double tz) {
-	v[0] += tx;
-	v[1] += ty;
-	v[2] += tz;
+	v[0] = tx;
+	v[1] = ty;
+	v[2] = tz;
 }
 
 void Vector4::reset() {
