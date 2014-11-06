@@ -101,22 +101,72 @@ void Window::displayCallback()
   }
   else {
 	  glEnable(GL_LIGHTING);
-	  glmatrix = Globals::bunny->getMatrix();
-	  if (!read) {
-		glmatrix.identity();
-		glmatrix.transpose();
-		glLoadMatrixd(glmatrix.getPointer());
-		ifstream file;
-		double x,y,z,nX,nY,nZ = 0;
-		Vector3 *normal, *point;
-		if (showBunny) {
-			//  Globals::bunny->load();
-			  if (!read) {
-				Globals::bunny->draw(width, height);
-			}
-		}
-		else {
-		  file.open("dragon.xyz");
+	  glmatrix = Globals::cube.getMatrix();
+	  if (!read)
+		  glmatrix.identity();
+	  glmatrix.transpose();
+	  glLoadMatrixd(glmatrix.getPointer());
+	  ifstream file;
+	  double x,y,z,nX,nY,nZ = 0;
+	  Vector3 *normal, *point;
+	  if (showBunny) {
+		  file.open("bunny.xyz");
+		  if (!read) {
+			  normals.clear();
+			  points.clear();
+			  sX, sY, sZ, lX, lY, lZ = 0;
+			  std::cout << "Read" << std::endl;
+			  while (file >> x >> y >> z >> nX >> nY >> nZ) {
+				  normal = new Vector3(nX, nY, nZ);
+				  point = new Vector3(x, y, z);
+				  normal->normalize();
+				  normals.push_back(*normal);
+				  points.push_back(*point);
+				  if (x < sX)
+					  sX = x;
+				  if (x > lX)
+					  lX = x;
+				  if (y < sY)
+					  sY = y;
+				  if (y > lY)
+					  lY = y;
+				  if (z < sZ)
+					  sZ = z;
+				  if (z > lZ)
+					  lZ = z;
+			  }
+			  cout << "smallest x, y, z are: " << sX << ", " << sY << ", " << sZ << endl;
+			  cout << "biggest x, y, z are: " << lX << ", " << lY << ", " << lZ << endl;
+		  }
+		  glBegin(GL_POINTS);
+		  for (int i = 0; i < normals.size(); i++) {
+			  glNormal3d(normals[i].getX(), normals[i].getY(), normals[i].getZ());
+			  glColor3d(normals[i].getX(), normals[i].getY(), normals[i].getZ());
+			  glVertex3d(points[i].getX(), points[i].getY(), points[i].getZ());
+		  }
+		  glEnd();
+		  if (!read) {
+			  read = true;
+			  double scale;
+			  double Y = 40*tan(30*M_PI/180);
+			  double X = Y * width / height;
+			  double x = lX - sX;
+			  double y = lY - sY;
+			  if (x < y){
+				  scale = Y / y;
+				  Globals::cube.scale(scale);
+			  }
+			  else {
+				  scale = X / x;
+				  Globals::cube.scale(scale);
+			  }
+			  x = X/ 8;
+			  y = Y / 2;
+			  Globals::cube.move(x, -y, 0);
+		  }
+	  }
+	  else {
+		  file.open("dragon.xyz"); 
 		  if (!read) {
 			  sX, sY, sZ, lX, lY, lZ = 0;
 			  normals.clear();
@@ -158,7 +208,6 @@ void Window::displayCallback()
 			  double X = Y * width / height;
 			  double x = lX - sX;
 			  double y = lY - sY;
-			  double z = lZ - sZ;
 			  if (x < y){
 				  scale = Y / y;
 				  Globals::cube.scale(scale);
@@ -167,17 +216,16 @@ void Window::displayCallback()
 				  scale = X / x;
 				  Globals::cube.scale(scale);
 			  }
-			  x = (lX + sX)*scale;
-			  y = (lY + sY)*scale;
-			  z = (lZ + sZ)*scale;
-			  Globals::cube.move(-x / 2.0, -y / 2.0, -z / 2.0);
+			  x = x*scale/ 8;
+			  y = y*scale / 2;
+			  Globals::cube.move(x - 2, -y, 0);
 		  }
-	  }
+		  }
+		  
   }
   glFlush();  
   glutSwapBuffers();
 }
-  }
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when users press specific keys on the keyboard

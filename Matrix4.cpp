@@ -160,16 +160,16 @@ void Matrix4::makeRotate(double angle, const Vector3& axis) {
 
 void Matrix4::makeScale(double sx, double sy, double sz) {
 	identity();
-	m[0][0] = sx;
-	m[1][1] = sy;
-	m[2][2] = sz;
+	m[0][0] *= sx;
+	m[1][1] *= sy;
+	m[2][2] *= sz;
 }
 
 void Matrix4::makeTranslate(double tx, double ty, double tz) {
 	identity();
-	m[0][3] = tx;
-	m[1][3] = ty;
-	m[2][3] = tz;
+	m[0][3] += tx;
+	m[1][3] += ty;
+	m[2][3] += tz;
 }
 
 double Matrix4::get(int x, int y) {
