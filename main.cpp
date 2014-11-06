@@ -19,6 +19,7 @@ namespace Globals
   Camera camera;
   Camera altCamera;
   House *house;
+  Bunny *bunny;
   vector<Vector3> *normals;
   vector<Vector3> *points;
 
@@ -68,6 +69,7 @@ int main(int argc, char *argv[])
   Globals::camera.set(Vector3(0.0, 10.0, 10.0),Vector3(0,0,0),  Vector3(0,1,0));
   Globals::altCamera.set(Vector3(-15,5,10), Vector3(-5,0,0), Vector3(0, 1, 0.5));
   Globals::house = new House();
+  Globals::bunny = new Bunny();
   glutMainLoop();
   return 0;
 }

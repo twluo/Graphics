@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bunny.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="house.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bunny.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="house.cpp" />

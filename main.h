@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "house.h"
 #include <vector>
+#include "bunny.h"
 
 namespace Globals
 {
@@ -12,6 +13,7 @@ namespace Globals
 	extern Camera camera;
 	extern Camera altCamera;
 	extern House *house;
+	extern Bunny *bunny;
 };
 
 #endif
